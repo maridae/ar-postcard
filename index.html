@@ -2,17 +2,16 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-aframe.prod.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-aframe.prod.js"></script>
   </head>
 
   <body style="margin : 0px; overflow: hidden;">
     
-    <a-scene mindar-image="imageTargetSrc: ./postkarte.mind; autoStart: true; uiScanning: yes; filterMinCF: 0.0001; filterBeta: 0.001;" 
-             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"
-             color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights">
+    <a-scene mindar-image="imageTargetSrc: ./postkarte.mind; autoStart: true; uiScanning: yes;"
+             renderer="colorManagement: true, physicallyCorrectLights"
+             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
-      <a-camera active="false" position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-camera position="0 0 0" look-controls="enabled: false" mindar-image-mr=""></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
         
