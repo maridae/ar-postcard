@@ -8,9 +8,18 @@
 
   <body style="margin : 0px; overflow: hidden;">
     
-    <a-scene mindar-image="imageTargetSrc: ./postkarte.mind; autoStart: true; uiScanning: yes; filterMinCF: 0.001; filterBeta: 1000;"
-             renderer="colorManagement: true; physicallyCorrectLights: true;"
-             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene 
+        mindar-image="
+            imageTargetSrc: ./postkarte.mind; 
+            autoStart: true; 
+            uiScanning: yes; 
+            filterMinCF: 0.1; 
+            filterBeta: 10;
+            minDetectionConfidence: 0.7;
+        "
+        renderer="colorManagement: true; physicallyCorrectLights: true;"
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false">
 
       <a-camera position="0 0 0" look-controls="enabled: false" mindar-image-mr=""></a-camera>
 
@@ -20,7 +29,7 @@
           gltf-model="url(lowpoly_humming-bird_animated.glb)"
           position="0 0.5 0" 
           scale="0.5 0.5 0.5"
-          rotation="-90 180 0" 
+          rotation="-90 0 0" 
           animation-mixer="clip: *; loop: repeat"> 
         </a-entity>
         
