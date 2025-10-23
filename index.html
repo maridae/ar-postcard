@@ -1,39 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
 
-  <body style="margin : 0px; overflow: hidden;">
-    
-    <a-scene 
-        mindar-image="
-            imageTargetSrc: ./postkarte.mind; 
-            autoStart: true; 
-            uiScanning: yes; 
-            filterMinCF: 0.1; 
-            filterBeta: 10;
-            minDetectionConfidence: 0.7;
-        "
-        renderer="colorManagement: true; physicallyCorrectLights: true;"
-        vr-mode-ui="enabled: false" 
-        device-orientation-permission-ui="enabled: false">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.6.0/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script>
+    AFRAME.registerComponent('smooth-transform', {
+      schema: {
+        factor: { type: 'number', default: 0.05 }
+      },
+      init: function () {
+        this.targetPosition = new THREE.Vector3();
+        this.initialRotation = new THREE.Euler();
+        this.initialRotation.copy(this.el.object3D.rotation);
+      },
+      tick: function () {
+        const el = this.el;
+        const parent = el.parentEl;
 
-      <a-camera position="0 0 0" look-controls="enabled: false" mindar-image-mr=""></a-camera>
+        if (parent && parent.object3D) {
+          // Nur Position vom Parent smooth übernehmen
+          this.targetPosition.copy(parent.object3D.position);
+          el.object3D.position.lerp(this.targetPosition, this.data.factor);
 
-      <a-entity mindar-image-target="targetIndex: 0">
-        
-        <a-entity
-          gltf-model="url(lowpoly_humming-bird_animated.glb)"
-          position="0 0.5 0" 
-          scale="0.5 0.5 0.5"
-          rotation="-90 0 0" 
-          animation-mixer="clip: 1; loop: repeat"> 
-        </a-entity>
-        
+          // Lokale Rotation beibehalten
+          el.object3D.rotation.copy(this.initialRotation);
+        }
+      }
+    });
+  </script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+  <a-scene mindar-image="
+            imageTargetSrc: ./postkarte_rand.mind;
+            autoStart: true;
+            uiScanning: yes;
+            filterMinCF: 0.00001;
+            filterBeta: 20000;
+            warmupTolerance: 30;
+            missTolerance: 30;
+            minDetectionConfidence: 0.4;
+        " renderer="colorManagement: true; physicallyCorrectLights: true;" vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <a-camera position="0 0 0" look-controls="enabled: false" mindar-image-mr=""></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+
+      <a-entity gltf-model="url(lowpoly_humming-bird_animated.glb)" position="0 0.2 0" scale="0.3 0.3 0.3"
+        rotation="90 0 0" animation-mixer smooth-transform="factor: 0.05">
       </a-entity>
-    </a-scene>
-  </body>
+
+    </a-entity>
+  </a-scene>
+</body>
+
 </html>
