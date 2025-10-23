@@ -3,14 +3,13 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> 
-    
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   </head>
 
   <body style="margin : 0px; overflow: hidden;">
     
-    <a-scene mindar-image="imageTargetSrc: ./postkarte.mind; autoStart: true; uiScanning: yes;"
-             renderer="colorManagement: true, physicallyCorrectLights"
+    <a-scene mindar-image="imageTargetSrc: ./postkarte.mind; autoStart: true; uiScanning: yes; filterMinCF: 0.1; filterBeta: 10;"
+             renderer="colorManagement: true; physicallyCorrectLights: true;"
              vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
       <a-camera position="0 0 0" look-controls="enabled: false" mindar-image-mr=""></a-camera>
@@ -21,16 +20,11 @@
           gltf-model="url(lowpoly_humming-bird_animated.glb)"
           position="0 0.5 0" 
           scale="0.5 0.5 0.5"
-          
-          rotation="90 0 0" 
-          
+          rotation="-90 0 0" 
           animation-mixer="clip: *; loop: repeat"> 
         </a-entity>
         
       </a-entity>
     </a-scene>
   </body>
-
 </html>
-
-
